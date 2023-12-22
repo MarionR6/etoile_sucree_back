@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookie = require("cookie-parser");
 const path = require("path");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
@@ -16,13 +17,20 @@ require("./database");
 
 const routes = require("./routes");
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://etoile-sucree-front.vercel.app");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
-    res.header("Access-Control-Allow-Headers", "Content-Type");
-    res.header("Access-Control-Allow-Credentials", true);
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "https://etoile-sucree-front.vercel.app");
+//     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+//     res.header("Access-Control-Allow-Headers", "Content-Type");
+//     res.header("Access-Control-Allow-Credentials", true);
+//     next();
+// });
+
+app.use(cors({
+    origin: 'https://etoile-sucree-front.vercel.app',
+    credentials: true,
+    methods: "GET, PUT, POST, DELETE, PATCH",
+    allowedHeaders: "Content-Type"
+}));
 
 
 app.use(routes);
