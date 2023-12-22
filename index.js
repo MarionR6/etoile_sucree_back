@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookie = require("cookie-parser");
 const path = require("path");
+require("dotenv").config();
 
 const app = express();
 app.use(express.static(path.join(__dirname, "upload")));
@@ -9,7 +10,7 @@ app.use(express.static(path.join(__dirname, "upload")));
 app.use(bodyParser.json());
 app.use(cookie());
 
-const port = 8000;
+const port = process.env.MYSQL_PORT;
 
 require("./database");
 
@@ -25,6 +26,6 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
-app.listen(port, () => {
-    console.log(`Serveur Node écoutant sur le port ${port}`);
+app.listen(port, "0.0.0.0", () => {
+    console.log(`serveur Node écoutant sur le port ${port}`);
 });
