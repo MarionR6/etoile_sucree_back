@@ -17,8 +17,14 @@ require("./database");
 const routes = require("./routes");
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://etoile-sucree-front.vercel.app");
-    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, PATCH");
+    res.header("Access-Control-Allow-Credentials", true);
+    const allowedOrigin = "https://etoile-sucree-front.vercel.app";
+    const origin = req.headers.origin;
+    if (allowedOrigin.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header("Access-Control-Allow-Origin", allowedOrigin);
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE,PATCH,OPTIONS");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     res.header("Access-Control-Allow-Credentials", true);
     next();
